@@ -1,2 +1,3 @@
 # ninja-csm
-Github Actions and CSM for secrets
+
+Github Actions Plugin for CSM: How to fetch a static secret.
