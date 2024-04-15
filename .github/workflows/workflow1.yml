@@ -40,18 +40,18 @@ jobs:
       contents: read
     steps:
 
-    # - name: Fetch static secrets from Akeyless
-    #   uses: akeyless-community/akeyless-github-action@v1.0.1
-    #   id: fetch-secrets
-    #   with:
-    #     access-id: '${{ secrets.ACCESS_ID }}'
-    #     access-type: jwt
-    #     export-secrets-to-outputs: true
-    #     export-secrets-to-environment: true
-    #     static-secrets: |
-    #       - name: "cicd/for-github-actions-dfc"
-    #         output-name: "my_github_actions_secret"
-    #     api-url: "https://cm-ninja.kiukairor.com/akeyless-api/v2/"
+    - name: Fetch static secrets from Akeyless
+      uses: akeyless-community/akeyless-github-action@v1.0.1
+      id: fetch-secrets
+      with:
+        access-id: '${{ secrets.ACCESS_ID }}'
+        access-type: jwt
+        export-secrets-to-outputs: true
+        export-secrets-to-environment: true
+        static-secrets: |
+          - name: "cicd/for-github-actions-dfc"
+            output-name: "my_github_actions_secret"
+        api-url: "https://cm-ninja.kiukairor.com/akeyless-api/v2/"
    
     - name: Use Akeyless secret (environment variable)
       # env:
