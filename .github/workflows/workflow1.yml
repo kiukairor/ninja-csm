@@ -66,5 +66,5 @@ jobs:
     - name: Use Akeyless secret (step output)
       run: |
         # Use the secret securely within this step
-        # echo "Doing something with ${{ steps.fetch-secrets.outputs.my_github_actions_secret }}"
+        echo "Doing something with ${{ steps.fetch-secrets.outputs.my_github_actions_secret }}"
         echo "ui ui uiiii again"
