@@ -12,7 +12,7 @@ jobs:
     - name: Fetch dynamic secrets from Akeyless
       uses: akeyless-community/akeyless-github-action@v1.0.1
       
-      id: fetch--dynamic-secrets
+      id: fetch-dynamic-secrets
       with:
         access-id: '${{ secrets.ACCESS_ID }}'
         dynamic-secrets: |
