@@ -56,11 +56,11 @@ jobs:
         api-url: "https://cm-ninja.kiukairor.com/akeyless-api/v2/"
    
     - name: Use Akeyless secret (environment variable)
-      # env:
-      #   SECRET: ${{ env.my_github_actions_secret }}
+      env:
+        SECRET: ${{ env.my_github_actions_secret }}
       run: |
         # # Use the secret securely within this step
-        # echo "Doing something with $SECRET"
+        echo "Doing something with $SECRET"
         echo "ui ui uiiii"
      
     - name: Use Akeyless secret (step output)
