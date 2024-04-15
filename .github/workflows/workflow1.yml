@@ -41,7 +41,7 @@ jobs:
     steps:
 
     - name: Fetch static secrets from Akeyless
-      uses: akeyless-community/akeyless-github-action@v1.0.1
+      uses: akeyless-community/akeyless-github-action@v3
       id: fetch-secrets
       with:
         access-id: '${{ secrets.ACCESS_ID }}'
