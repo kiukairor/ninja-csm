@@ -35,11 +35,11 @@ name: Fetch Static Secrets example
 jobs:
   fetch_secrets:
     runs-on: self-hosted
+    # runs-on: 'ubuntu-latest'
     permissions:
       id-token: write
       contents: read
     steps:
-
     - name: Fetch static secrets from Akeyless
       # uses: akeyless-community/akeyless-github-action@v3
       uses: LanceMcCarthy/akeyless-action@v3
@@ -49,9 +49,10 @@ jobs:
         access-type: jwt
         export-secrets-to-outputs: true
         export-secrets-to-environment: true
-        static-secrets: |
-          - name: "cicd/for-github-actions-dfc"
-            output-name: "my_github_actions_secret"
+        # static-secrets: |
+        #   - name: "cicd/for-github-actions-dfc"
+        #     output-name: "my_github_actions_secret"
+        static-secrets: '{"cicd/for-github-actions-dfc":"my_github_actions_secret"}'
         api-url: "https://cm-ninja.kiukairor.com/akeyless-api/v2/"
    
     - name: Use Akeyless secret (environment variable)
