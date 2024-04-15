@@ -1,0 +1,38 @@
+name: Fetch Dynamic Secret
+
+'on': push
+
+jobs:
+  fetch_secrets:
+    runs-on: self-hosted
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Fetch dynamic secrets from Akeyless
+      uses: akeyless-community/akeyless-github-action@v1.0.1
+      
+      id: fetch-secrets
+      with:
+        access-id: '${{ secrets.ACCESS_ID }}'
+        access-type: jwt
+        export-secrets-to-outputs: true
+        export-secrets-to-environment: true
+        static-secrets: |
+          - name: "cicd/github-actions-dyn-postgres"
+            output-name: "my_github_actions_secret"
+        api-url: "https://cm-ninja.kiukairor.com/akeyless-api/v2/"
+   
+    - name: Use Akeyless secret (environment variable)
+      env:
+        SECRET: ${{ env.my_github_actions_secret }}
+      run: |
+        # # Use the secret securely within this step
+        echo "Doing something with $SECRET"
+        echo "DYnamic uiuiui
+     
+    - name: Use Akeyless secret (step output)
+      run: |
+        # Use the secret securely within this step
+        echo "Doing something with ${{ steps.fetch-secrets.outputs.my_github_actions_secret }}"
+        echo "ok okok dynamic"
