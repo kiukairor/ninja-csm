@@ -12,27 +12,30 @@ jobs:
     - name: Fetch dynamic secrets from Akeyless
       uses: akeyless-community/akeyless-github-action@v1.0.1
       
-      id: fetch-secrets
+      id: fetch--dynamic-secrets
       with:
         access-id: '${{ secrets.ACCESS_ID }}'
+        dynamic-secrets: |
+            - name: "/cicd/github-actions-dyn-postgres"
+              output-name: "postgres_dynamic_secret"
         access-type: jwt
         export-secrets-to-outputs: true
         export-secrets-to-environment: true
-        static-secrets: |
-          - name: "cicd/github-actions-dyn-postgres"
-            output-name: "my_github_actions_secret"
         api-url: "https://cm-ninja.kiukairor.com/akeyless-api/v2/"
    
-    - name: Use Akeyless secret (environment variable)
-      env:
-        SECRET: ${{ env.my_github_actions_secret }}
-      run: |
-        # # Use the secret securely within this step
-        echo "Doing something with $SECRET"
-        echo "DYnamic uiuiui
-     
-    - name: Use Akeyless secret (step output)
-      run: |
-        # Use the secret securely within this step
-        echo "Doing something with ${{ steps.fetch-secrets.outputs.my_github_actions_secret }}"
-        echo "ok okok dynamic"
+    - name: Export Secrets to Environment
+        run:>
+          echo '${{ steps.fetch-dynamic-secrets.outputs.postgres_dynamic_secret
+          }}' | jq -r
+          'to_entries|map("POSTGRES_\(.key|ascii_upcase)=\(.value|tostring)")|.[]'
+          >> $GITHUB_ENV
+    - name: Verify Vars
+        run:>
+          echo "host:${{ env.POSTGRES_HOST }}" >> secrets.txt
+          echo "port:${{ env.POSTGRES_PORT }}" >> secrets.txt
+          echo "username:${{ env.POSTGRES_USER }}" >> secrets.txt
+          echo "password:${{ env.POSTGRES_PASSWORD }}" >> secrets.txt
+          echo "db_name:${{ env.POSTGRES_DB_NAME }}" >> secrets.txt
+          echo "ttl_in_minutes:${{ env.POSTGRES_TTL_IN_MINUTES }}" >>
+          secrets.txt           
+
